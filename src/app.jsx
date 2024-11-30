@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import classes from './app.module.css'
 
 export const App = () => {
