@@ -1,14 +1,18 @@
-import { useState } from 'react'
+/* eslint-disable react/prop-types */
 import { NavigationLayout } from './navigationLayout.jsx'
 
-export const Navigation = ({ setModalActive }) => {
-	const [inputValue, setInputValue] = useState('')
-
+export const Navigation = ({
+	setModalActive,
+	creationInputRef,
+	searchingInputValue,
+	setSearchingInputValue,
+}) => {
 	return (
 		<NavigationLayout
-			inputValue={inputValue}
-			setInputValue={setInputValue}
+			searchingInputValue={searchingInputValue}
+			setSearchingInputValue={setSearchingInputValue}
 			setModalActive={setModalActive}
+			creationInputRef={creationInputRef}
 		/>
 	)
 }

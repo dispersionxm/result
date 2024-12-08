@@ -1,13 +1,29 @@
+/* eslint-disable react/prop-types */
 import { TodoListLayout } from './todoListLayout.jsx'
 import { TodoItem } from '../../components'
 
-// eslint-disable-next-line react/prop-types
-export const TodoList = ({ todos }) => {
+export const TodoList = ({
+	todos,
+	refreshProducts,
+	setRefreshProducts,
+	isLoading,
+	activeModalId,
+	setActiveModalId,
+}) => {
 	return (
 		<TodoListLayout>
 			{/* eslint-disable-next-line react/prop-types */}
 			{todos.map(({ id, title }) => (
-				<TodoItem title={title} key={id} id={id} />
+				<TodoItem
+					title={title}
+					key={id}
+					id={id}
+					refreshProducts={refreshProducts}
+					setRefreshProducts={setRefreshProducts}
+					isLoading={isLoading}
+					activeModalId={activeModalId}
+					setActiveModalId={setActiveModalId}
+				/>
 			))}
 		</TodoListLayout>
 	)

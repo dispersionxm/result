@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './modal.css'
 
 export const Modal = ({ active, setActive, children }) => {
