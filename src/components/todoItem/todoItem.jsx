@@ -1,64 +1,33 @@
 /* eslint-disable react/prop-types */
+import { useState, useRef, useEffect } from 'react'
+import { Modal } from '../modal/modal'
+import { useRequestUpdateServer, useRequestDeleteServer } from '../../utils'
 import classes from './todoItem.module.css'
 import editIcon from '../icons/edit-icon.svg'
 import deleteIcon from '../icons/delete-icon.svg'
-import { useState, useRef } from 'react'
-import { Modal } from '../modal/modal'
 
-export const TodoItem = ({
-	id,
-	title,
-	refreshProducts,
-	setRefreshProducts,
-	activeModalId,
-	setActiveModalId,
-}) => {
+export const TodoItem = ({ id, title, activeModalId, setActiveModalId }) => {
 	const [content, setContent] = useState(title)
-	const [modalActive, setModalActive] = useState(false)
-	const [isDeleting, setIsDeleting] = useState(false)
-	const [isUpdating, setIsUpdating] = useState(false)
 
-	const handleDelete = () => {
-		setIsDeleting(true)
-		fetch(`http://localhost:4242/todos/${id}`, {
-			method: 'Delete',
-			headers: { 'Content-Type': 'application/json;charset=utf-8' },
-		})
-			.then(response => {
-				if (!response.ok) throw new Error('Ошибка при удалении')
-				setRefreshProducts(!refreshProducts)
-			})
-			.catch(error => {
-				console.error(error)
-				alert('Не удалось удалить задачу. Попробуйте снова.')
-			})
-			.finally(() => setIsDeleting(false))
-	}
+	const { isUpdating, handleUpdate } = useRequestUpdateServer(
+		id,
+		setActiveModalId,
+	)
 
-	const handleUpdate = () => {
-		setIsUpdating(true)
+	const { isDeleting, handleDelete } = useRequestDeleteServer(id)
 
-		fetch(`http://localhost:4242/todos/${id}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			body: JSON.stringify({
-				title: content,
-			}),
-		})
-			.then(response => {
-				if (!response.ok) throw new Error('Ошибка при обновлении')
-				setRefreshProducts(!refreshProducts)
-				setActiveModalId(null)
-			})
-			.catch(error => {
-				console.error(error)
-				alert('Не удалось обновить задачу. Попробуйте снова.')
-			})
-			.finally(() => setIsUpdating(false))
-	}
+	const updatingInputRef = useRef(null)
+
+	useEffect(() => {
+		if (activeModalId !== null && updatingInputRef.current) {
+			updatingInputRef.current.focus()
+		}
+	}, [activeModalId])
 
 	const handleBackgroundClick = event => {
-		if (event.target === event.currentTarget) setModalActive(false)
+		if (event.target === event.currentTarget) {
+			setActiveModalId(null)
+		}
 	}
 
 	return (
@@ -88,7 +57,10 @@ export const TodoItem = ({
 
 			<Modal
 				active={activeModalId === id}
-				setActive={() => setActiveModalId(null)}
+				setActive={() => {
+					setActiveModalId(null)
+					setContent(title)
+				}}
 			>
 				<div className={classes.modalTitle} onClick={handleBackgroundClick}>
 					Обновить заметку
@@ -97,13 +69,15 @@ export const TodoItem = ({
 					className={classes.creatingForm}
 					onSubmit={event => {
 						event.preventDefault()
-						handleUpdate()
+						handleUpdate(content)
+						setActiveModalId(null)
 					}}
 				>
 					<label className={classes.modalLabel}>Введите заметку:</label>
 					<input
 						value={content}
 						onChange={event => setContent(event.target.value)}
+						ref={updatingInputRef}
 					/>
 					<div className={classes.buttons}>
 						<button type="submit">

@@ -4,8 +4,6 @@ import { TodoItem } from '../../components'
 
 export const TodoList = ({
 	todos,
-	refreshProducts,
-	setRefreshProducts,
 	isLoading,
 	activeModalId,
 	setActiveModalId,
@@ -18,8 +16,6 @@ export const TodoList = ({
 					title={title}
 					key={id}
 					id={id}
-					refreshProducts={refreshProducts}
-					setRefreshProducts={setRefreshProducts}
 					isLoading={isLoading}
 					activeModalId={activeModalId}
 					setActiveModalId={setActiveModalId}

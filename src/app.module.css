@@ -86,3 +86,10 @@
 		transform: rotate(360deg);
 	}
 }
+
+.noResults {
+	text-align: center;
+	font-size: 18px;
+	color: #888;
+	margin: 20px 0;
+}
