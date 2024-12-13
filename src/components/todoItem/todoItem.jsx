@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useState } from 'react'
+import { useRequestUpdateServer, useRequestDeleteServer } from '../../utils'
+import { Modal } from '../modal/modal'
 import classes from './todoItem.module.css'
 import editIcon from '../icons/edit-icon.svg'
 import deleteIcon from '../icons/delete-icon.svg'
-import { useState, useRef } from 'react'
-import { Modal } from '../modal/modal'
 
 export const TodoItem = ({
 	id,
@@ -14,51 +15,20 @@ export const TodoItem = ({
 	setActiveModalId,
 }) => {
 	const [content, setContent] = useState(title)
-	const [modalActive, setModalActive] = useState(false)
-	const [isDeleting, setIsDeleting] = useState(false)
-	const [isUpdating, setIsUpdating] = useState(false)
 
-	const handleDelete = () => {
-		setIsDeleting(true)
-		fetch(`http://localhost:4242/todos/${id}`, {
-			method: 'Delete',
-			headers: { 'Content-Type': 'application/json;charset=utf-8' },
-		})
-			.then(response => {
-				if (!response.ok) throw new Error('Ошибка при удалении')
-				setRefreshProducts(!refreshProducts)
-			})
-			.catch(error => {
-				console.error(error)
-				alert('Не удалось удалить задачу. Попробуйте снова.')
-			})
-			.finally(() => setIsDeleting(false))
-	}
+	const { isUpdating, handleUpdate } = useRequestUpdateServer(
+		refreshProducts,
+		setRefreshProducts,
+		setActiveModalId,
+	)
 
-	const handleUpdate = () => {
-		setIsUpdating(true)
-
-		fetch(`http://localhost:4242/todos/${id}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			body: JSON.stringify({
-				title: content,
-			}),
-		})
-			.then(response => {
-				if (!response.ok) throw new Error('Ошибка при обновлении')
-				setRefreshProducts(!refreshProducts)
-				setActiveModalId(null)
-			})
-			.catch(error => {
-				console.error(error)
-				alert('Не удалось обновить задачу. Попробуйте снова.')
-			})
-			.finally(() => setIsUpdating(false))
-	}
+	const { isDeleting, handleDelete } = useRequestDeleteServer(
+		refreshProducts,
+		setRefreshProducts,
+	)
 
 	const handleBackgroundClick = event => {
-		if (event.target === event.currentTarget) setModalActive(false)
+		if (event.target === event.currentTarget) setActiveModalId(null)
 	}
 
 	return (
@@ -79,10 +49,14 @@ export const TodoItem = ({
 				</button>
 				<button
 					className={classes.todoItemNavButton}
-					onClick={handleDelete}
+					onClick={() => handleDelete(id)}
 					disabled={isDeleting}
 				>
-					<img src={`${deleteIcon}`} alt="" title="Удалить..." />
+					<img
+						src={`${deleteIcon}`}
+						alt=""
+						title={isDeleting ? 'Удаляется...' : 'Удалить..'}
+					/>
 				</button>
 			</div>
 
@@ -97,7 +71,7 @@ export const TodoItem = ({
 					className={classes.creatingForm}
 					onSubmit={event => {
 						event.preventDefault()
-						handleUpdate()
+						handleUpdate(id, content)
 					}}
 				>
 					<label className={classes.modalLabel}>Введите заметку:</label>

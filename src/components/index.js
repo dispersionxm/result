@@ -1,3 +1,5 @@
+export * from './modal/modal.jsx'
 export * from './navigation/navigation.jsx'
 export * from './todoList/todoList.jsx'
 export * from './todoItem/todoItem.jsx'
+export * from './creationForm/creationForm.jsx'

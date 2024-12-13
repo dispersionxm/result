@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react'
-import { useRequestGetServer, useRequestPostServer } from './utils'
-import { Navigation, TodoList, Modal, CreationForm } from './components'
-import classes from './app.module.css'
+import { useRequestGetServer, useRequestPostServer } from '../../utils'
+import { Navigation, TodoList, Modal } from '../../components'
+import classes from './homePage.module.css'
 
-export const App = () => {
+export const HomePage = () => {
 	const [modalActive, setModalActive] = useState(false)
 	const [activeModalId, setActiveModalId] = useState(null)
 	const [newTodoValue, setNewTodoValue] = useState('')
@@ -17,10 +17,10 @@ export const App = () => {
 
 	// post
 	const { isCreating, handleCreate } = useRequestPostServer(
-		refreshProducts,
-		setRefreshProducts,
 		setNewTodoValue,
 		setModalActive,
+		refreshProducts,
+		setRefreshProducts,
 	)
 
 	// filter
@@ -55,13 +55,25 @@ export const App = () => {
 
 			<Modal active={modalActive} setActive={setModalActive}>
 				<div className={classes.modalTitle}>Создать заметку</div>
-				<CreationForm
-					newTodoValue={newTodoValue}
-					setNewTodoValue={setNewTodoValue}
-					creationInputRef={creationInputRef}
-					isCreating={isCreating}
-					handleCreate={handleCreate}
-				/>
+				<form
+					className={classes.creatingForm}
+					onSubmit={event => {
+						event.preventDefault()
+						newTodoValue ? handleCreate(newTodoValue) : null
+					}}
+				>
+					<label className={classes.modalLabel}>Введите заметку:</label>
+					<input
+						value={newTodoValue}
+						onChange={event => setNewTodoValue(event.target.value)}
+						ref={creationInputRef}
+					/>
+					<div className={classes.buttons}>
+						<button type="submit">
+							{isCreating ? 'Загрузка...' : 'Готово'}
+						</button>
+					</div>
+				</form>
 			</Modal>
 		</>
 	)

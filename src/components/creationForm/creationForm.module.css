@@ -1,0 +1,49 @@
+.modalLabel {
+	font-family: inherit;
+	margin: 0 0 8px;
+	font-size: 13px;
+}
+
+.creatingForm {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+}
+
+.creatingForm input {
+	padding: 10px;
+	height: 16px;
+	width: calc(100% - 20px);
+	scroll-behavior: auto;
+	font-size: 13px;
+	display: flex;
+	visibility: visible;
+	background-color: rgb(64, 72, 76);
+	color: rgb(194, 199, 203);
+	border: none;
+	border-bottom: 1px solid rgb(138, 146, 151);
+	border-radius: 13px 13px 0 0;
+	margin-bottom: 10px;
+}
+
+.creatingForm input:focus {
+	outline: none;
+	border-bottom-color: #80d1f5;
+}
+
+.creatingForm button {
+	border-radius: 100px;
+	background-color: rgb(128, 209, 245);
+	border: 1px solid rgb(0, 53, 70);
+	height: 36px;
+	min-width: 67px;
+	padding: 8px 16px;
+	color: #292a2d;
+}
+
+.buttons {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
