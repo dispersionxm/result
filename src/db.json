@@ -1,12 +1,8 @@
 {
   "todos": [
     {
-      "title": "ss",
+      "title": ".todoListItem {     display: flex;     justify-content: space-between; /* Контент и кнопки распределены по краям */     align-items: center; /* Вертикальное выравнивание по центру */     padding: 10px 15px;     border: none;     border-radius: 10px;     background-color: #f9f9f9;     position: relative; /* Для позиционирования дочерних элементов */     overflow: hidden; /* Обрезаем содержимое за границами */     max-width: 840px; }",
       "id": 1
-    },
-    {
-      "title": "ashbdkjasbd",
-      "id": 2
     }
   ]
 }

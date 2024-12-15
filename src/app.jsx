@@ -1,68 +1,13 @@
-import { useState, useRef } from 'react'
-import { useRequestGetServer, useRequestPostServer } from './utils'
-import { Navigation, TodoList, Modal, CreationForm } from './components'
-import classes from './app.module.css'
+import { HomePage, NotFound } from './components'
+import { Routes, Route } from 'react-router-dom'
 
 export const App = () => {
-	const [modalActive, setModalActive] = useState(false)
-	const [activeModalId, setActiveModalId] = useState(null)
-	const [newTodoValue, setNewTodoValue] = useState('')
-	const [searchingInputValue, setSearchingInputValue] = useState('')
-	const [refreshProducts, setRefreshProducts] = useState(false)
-
-	const creationInputRef = useRef(null)
-
-	// get
-	const { isLoading, todos } = useRequestGetServer(refreshProducts)
-
-	// post
-	const { isCreating, handleCreate } = useRequestPostServer(
-		refreshProducts,
-		setRefreshProducts,
-		setNewTodoValue,
-		setModalActive,
-	)
-
-	// filter
-	const filteredTodos = todos.filter(todo =>
-		todo.title.toLowerCase().includes(searchingInputValue.toLowerCase()),
-	)
-
 	return (
 		<>
-			<Navigation
-				setModalActive={setModalActive}
-				creationInputRef={creationInputRef}
-				searchingInputValue={searchingInputValue}
-				setSearchingInputValue={setSearchingInputValue}
-			/>
-
-			{isLoading && <div className={classes.loader}></div>}
-
-			{!isLoading && filteredTodos.length === 0 && (
-				<div className={classes.noResults}>Ничего не найдено</div>
-			)}
-
-			{!isLoading && filteredTodos.length > 0 && (
-				<TodoList
-					todos={filteredTodos}
-					refreshProducts={refreshProducts}
-					setRefreshProducts={setRefreshProducts}
-					activeModalId={activeModalId}
-					setActiveModalId={setActiveModalId}
-				/>
-			)}
-
-			<Modal active={modalActive} setActive={setModalActive}>
-				<div className={classes.modalTitle}>Создать заметку</div>
-				<CreationForm
-					newTodoValue={newTodoValue}
-					setNewTodoValue={setNewTodoValue}
-					creationInputRef={creationInputRef}
-					isCreating={isCreating}
-					handleCreate={handleCreate}
-				/>
-			</Modal>
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="*" element={<NotFound />}></Route>
+			</Routes>
 		</>
 	)
 }

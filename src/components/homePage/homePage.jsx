@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { useRequestGetServer, useRequestPostServer } from '../../utils'
-import { Navigation, TodoList, Modal } from '../../components'
+import { Navigation, TodoList, Modal, CreationForm } from '../../components'
 import classes from './homePage.module.css'
 
 export const HomePage = () => {
@@ -17,10 +17,10 @@ export const HomePage = () => {
 
 	// post
 	const { isCreating, handleCreate } = useRequestPostServer(
-		setNewTodoValue,
-		setModalActive,
 		refreshProducts,
 		setRefreshProducts,
+		setNewTodoValue,
+		setActiveModalId,
 	)
 
 	// filter
@@ -55,25 +55,14 @@ export const HomePage = () => {
 
 			<Modal active={modalActive} setActive={setModalActive}>
 				<div className={classes.modalTitle}>Создать заметку</div>
-				<form
-					className={classes.creatingForm}
-					onSubmit={event => {
-						event.preventDefault()
-						newTodoValue ? handleCreate(newTodoValue) : null
-					}}
-				>
-					<label className={classes.modalLabel}>Введите заметку:</label>
-					<input
-						value={newTodoValue}
-						onChange={event => setNewTodoValue(event.target.value)}
-						ref={creationInputRef}
-					/>
-					<div className={classes.buttons}>
-						<button type="submit">
-							{isCreating ? 'Загрузка...' : 'Готово'}
-						</button>
-					</div>
-				</form>
+				<CreationForm
+					newTodoValue={newTodoValue}
+					setNewTodoValue={setNewTodoValue}
+					creationInputRef={creationInputRef}
+					isCreating={isCreating}
+					handleCreate={handleCreate}
+					setModalActive={setModalActive}
+				/>
 			</Modal>
 		</>
 	)

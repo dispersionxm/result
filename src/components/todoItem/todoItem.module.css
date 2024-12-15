@@ -7,7 +7,7 @@
 	max-width: 870px;
 	scroll-behavior: auto;
 	padding: 10px 15px;
-	border: 1px solid #ccc;
+	border: none;
 	border-radius: 10px;
 	margin-bottom: 8px;
 	background-color: #f9f9f9;
@@ -15,6 +15,16 @@
 		box-shadow 0.3s,
 		transform 0.2s ease;
 	color: black;
+	overflow: hidden;
+	scroll-behavior: auto;
+	width: 840px;
+	height: 36px;
+}
+
+.todoItemButtons {
+	position: absolute;
+	top: 10px;
+	right: 15px;
 }
 
 .todosListItem:hover {
@@ -115,4 +125,17 @@
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
+}
+
+.todoItemContent {
+	display: block;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	max-width: 765px;
+	white-space: normal;
+	text-align: left;
+	overscroll-behavior: auto;
+	text-overflow: ellipsis;
 }

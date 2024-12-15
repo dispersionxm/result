@@ -4,6 +4,7 @@ import classes from './creationForm.module.css'
 export const CreationForm = ({
 	newTodoValue,
 	setNewTodoValue,
+	setModalActive,
 	creationInputRef,
 	isCreating,
 	handleCreate,
@@ -16,6 +17,7 @@ export const CreationForm = ({
 				newTodoValue
 					? handleCreate(newTodoValue)
 					: alert('Поле не должно быть пустым!')
+				setModalActive(false)
 			}}
 		>
 			<label className={classes.modalLabel}>Введите заметку:</label>

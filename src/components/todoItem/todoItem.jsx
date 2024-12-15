@@ -33,9 +33,7 @@ export const TodoItem = ({
 
 	return (
 		<li key={id} className={classes.todoListItem}>
-			<div className="todoItemContent">
-				<span>{content}</span>
-			</div>
+			<div className="todoItemContent">{content}</div>
 
 			<div className={classes.todoItemButtons}>
 				<button

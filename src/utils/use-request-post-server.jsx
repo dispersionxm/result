@@ -22,7 +22,6 @@ export const useRequestPostServer = (
 				return response.json()
 			})
 			.then(() => {
-				console.log('servers answer')
 				setNewTodoValue('')
 				setActiveModalId(null)
 				setRefreshProducts(!refreshProducts)
