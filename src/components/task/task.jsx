@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import { useRequestUpdateServer, useRequestDeleteServer } from '../../utils'
-import { useMatch, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Modal } from '../../components'
 import classes from './task.module.css'
 import editIcon from '../icons/edit-icon.svg'
