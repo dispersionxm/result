@@ -34,7 +34,3 @@
 .modal__content.active {
 	transform: scale(1);
 }
-
-.modal:not(.active) {
-	display: none;
-}

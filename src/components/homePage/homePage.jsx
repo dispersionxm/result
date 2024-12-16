@@ -1,14 +1,17 @@
+/* eslint-disable react/prop-types */
 import { useState, useRef } from 'react'
 import { useRequestGetServer, useRequestPostServer } from '../../utils'
 import { Navigation, TodoList, Modal, CreationForm } from '../../components'
 import classes from './homePage.module.css'
 
-export const HomePage = () => {
+export const HomePage = ({
+	refreshProducts,
+	setRefreshProducts,
+	setActiveModalId,
+}) => {
 	const [modalActive, setModalActive] = useState(false)
-	const [activeModalId, setActiveModalId] = useState(null)
 	const [newTodoValue, setNewTodoValue] = useState('')
 	const [searchingInputValue, setSearchingInputValue] = useState('')
-	const [refreshProducts, setRefreshProducts] = useState(false)
 
 	const creationInputRef = useRef(null)
 
@@ -44,13 +47,7 @@ export const HomePage = () => {
 			)}
 
 			{!isLoading && filteredTodos.length > 0 && (
-				<TodoList
-					todos={filteredTodos}
-					refreshProducts={refreshProducts}
-					setRefreshProducts={setRefreshProducts}
-					activeModalId={activeModalId}
-					setActiveModalId={setActiveModalId}
-				/>
+				<TodoList todos={filteredTodos} />
 			)}
 
 			<Modal active={modalActive} setActive={setModalActive}>

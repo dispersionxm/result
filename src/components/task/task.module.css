@@ -1,0 +1,155 @@
+.todoListItem {
+	display: flex;
+	font-size: 1.2em;
+	justify-content: space-between;
+	align-items: center;
+	min-width: 870px;
+	max-width: 900px;
+	scroll-behavior: auto;
+	padding: 10px 15px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	margin-bottom: 8px;
+	background-color: #f9f9f9;
+	transition:
+		box-shadow 0.3s,
+		transform 0.2s ease;
+	color: black;
+	text-decoration: none;
+	will-change: transform, box-shadow;
+}
+
+.todoListItem:hover {
+	transform: scale(1.05);
+	box-shadow: 2px 2px 2px #b4b4b4;
+}
+
+.todoItemContent {
+	padding: 0;
+	white-space: wrap;
+	word-break: break-all;
+	overflow: auto;
+	box-sizing: border-box;
+}
+
+.todoItemButtons {
+	padding: 0;
+}
+
+.todoItemNavButton {
+	background-color: transparent;
+	padding: 0;
+	box-shadow: none;
+	border: none;
+	width: 28px;
+	height: 28px;
+	margin-right: 15px;
+	cursor: pointer;
+	transition: transform 0.3s ease;
+}
+
+.todoItemNavButton:hover {
+	transform: scale(1.1);
+}
+
+.todoItemNavButton:focus {
+	outline: none;
+}
+
+.todoItemNavButton:nth-last-child(1) {
+	margin-right: 0;
+}
+
+.todoItemNavButton img {
+	width: 28px;
+	height: 28px;
+}
+
+.modalLabel {
+	font-family: inherit;
+	margin: 0 0 8px;
+	font-size: 13px;
+	color: #fff;
+}
+
+.creatingForm {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+}
+
+.creatingForm input {
+	padding: 10px;
+	height: 36px;
+	width: 100%;
+	box-sizing: border-box;
+	scroll-behavior: auto;
+	font-size: 13px;
+	display: flex;
+	visibility: visible;
+	background-color: rgb(64, 72, 76);
+	color: rgb(194, 199, 203);
+	border: none;
+	border-bottom: 1px solid rgb(138, 146, 151);
+	border-radius: 13px 13px 0 0;
+	margin-bottom: 10px;
+}
+
+.creatingForm input:focus {
+	outline: none;
+	border-bottom-color: #80d1f5;
+}
+
+.creatingForm button {
+	border-radius: 100px;
+	background-color: rgb(128, 209, 245);
+	border: 1px solid rgb(0, 53, 70);
+	height: 36px;
+	min-width: 67px;
+	padding: 8px 16px;
+	color: #292a2d;
+	cursor: pointer;
+	transition:
+		background-color 0.3s ease,
+		transform 0.2s ease;
+}
+
+.creatingForm button:hover {
+	background-color: rgb(100, 180, 220);
+	transform: translateY(-2px);
+}
+
+.modalTitle {
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font-weight: bold;
+}
+
+.buttons {
+	width: 100%;
+	justify-content: flex-end;
+}
+
+.goBackButton {
+	background-color: #04aa6d;
+	height: 60px;
+	width: 200px;
+	border-radius: 10px;
+	font-size: 20px;
+	color: white;
+	border: none;
+	box-shadow: none;
+	margin-bottom: 10px;
+	cursor: pointer;
+	opacity: 0.9;
+	transition: all 0.4s ease;
+	position: fixed;
+	left: 150px;
+}
+
+.goBackButton:hover {
+	opacity: 1;
+}
