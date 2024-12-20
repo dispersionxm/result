@@ -1,29 +1,15 @@
-/* eslint-disable react/prop-types */
+import { useContext } from 'react'
 import { TodoListLayout } from './todoListLayout.jsx'
 import { TodoItem } from '../../components'
+import { AppContext } from '../../contexts'
 
-export const TodoList = ({
-	todos,
-	refreshProducts,
-	setRefreshProducts,
-	isLoading,
-	activeModalId,
-	setActiveModalId,
-}) => {
+export const TodoList = () => {
+	const { filteredTodos } = useContext(AppContext)
+
 	return (
 		<TodoListLayout>
-			{/* eslint-disable-next-line react/prop-types */}
-			{todos.map(({ id, title }) => (
-				<TodoItem
-					title={title}
-					key={id}
-					id={id}
-					refreshProducts={refreshProducts}
-					setRefreshProducts={setRefreshProducts}
-					isLoading={isLoading}
-					activeModalId={activeModalId}
-					setActiveModalId={setActiveModalId}
-				/>
+			{filteredTodos.map(({ id, title }) => (
+				<TodoItem title={title} key={id} id={id} />
 			))}
 		</TodoListLayout>
 	)

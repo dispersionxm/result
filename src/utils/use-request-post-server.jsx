@@ -22,7 +22,6 @@ export const useRequestPostServer = (
 				return response.json()
 			})
 			.then(() => {
-				console.log('servers answer')
 				setNewTodoValue('')
 				setActiveModalId(null)
 				setRefreshProducts(!refreshProducts)
@@ -31,7 +30,7 @@ export const useRequestPostServer = (
 				console.error(error)
 				alert('Не удалось добавить задачу. Попробуйте снова.')
 			})
-			.finally(setIsCreating(false))
+			.finally(() => setIsCreating(false))
 	}
 
 	return {

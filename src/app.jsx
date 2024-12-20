@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRequestGetServer, useRequestPostServer } from './utils'
 import { Navigation, TodoList, Modal, CreationForm } from './components'
+import { AppContext } from './contexts'
 import classes from './app.module.css'
 
 export const App = () => {
@@ -28,14 +29,27 @@ export const App = () => {
 		todo.title.toLowerCase().includes(searchingInputValue.toLowerCase()),
 	)
 
+	useEffect(() => {
+		if (modalActive) {
+			creationInputRef.current.focus()
+		}
+	}, [modalActive])
+
 	return (
-		<>
-			<Navigation
-				setModalActive={setModalActive}
-				creationInputRef={creationInputRef}
-				searchingInputValue={searchingInputValue}
-				setSearchingInputValue={setSearchingInputValue}
-			/>
+		<AppContext.Provider
+			value={{
+				refreshProducts,
+				setRefreshProducts,
+				modalActive,
+				setModalActive,
+				activeModalId,
+				setActiveModalId,
+				searchingInputValue,
+				setSearchingInputValue,
+				filteredTodos,
+			}}
+		>
+			<Navigation />
 
 			{isLoading && <div className={classes.loader}></div>}
 
@@ -43,15 +57,7 @@ export const App = () => {
 				<div className={classes.noResults}>Ничего не найдено</div>
 			)}
 
-			{!isLoading && filteredTodos.length > 0 && (
-				<TodoList
-					todos={filteredTodos}
-					refreshProducts={refreshProducts}
-					setRefreshProducts={setRefreshProducts}
-					activeModalId={activeModalId}
-					setActiveModalId={setActiveModalId}
-				/>
-			)}
+			{!isLoading && filteredTodos.length > 0 && <TodoList />}
 
 			<Modal active={modalActive} setActive={setModalActive}>
 				<div className={classes.modalTitle}>Создать заметку</div>
@@ -63,6 +69,6 @@ export const App = () => {
 					handleCreate={handleCreate}
 				/>
 			</Modal>
-		</>
+		</AppContext.Provider>
 	)
 }

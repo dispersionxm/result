@@ -1,20 +1,23 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useRequestUpdateServer, useRequestDeleteServer } from '../../utils'
 import { Modal } from '../modal/modal'
+import { AppContext } from '../../contexts/index.js'
 import classes from './todoItem.module.css'
 import editIcon from '../icons/edit-icon.svg'
 import deleteIcon from '../icons/delete-icon.svg'
 
-export const TodoItem = ({
-	id,
-	title,
-	refreshProducts,
-	setRefreshProducts,
-	activeModalId,
-	setActiveModalId,
-}) => {
+export const TodoItem = ({ id, title }) => {
 	const [content, setContent] = useState(title)
+	const [tempContent, setTempContent] = useState(title)
+	const {
+		refreshProducts,
+		setRefreshProducts,
+		activeModalId,
+		setActiveModalId,
+	} = useContext(AppContext)
+
+	const updatingInputRef = useRef(null)
 
 	const { isUpdating, handleUpdate } = useRequestUpdateServer(
 		refreshProducts,
@@ -27,22 +30,35 @@ export const TodoItem = ({
 		setRefreshProducts,
 	)
 
-	const handleBackgroundClick = event => {
-		if (event.target === event.currentTarget) setActiveModalId(null)
+	useEffect(() => {
+		if (activeModalId === id) {
+			updatingInputRef.current.focus()
+			setTempContent(content)
+		}
+	}, [activeModalId, id, content])
+
+	const handleCloseModal = () => {
+		setActiveModalId(null)
+		setTempContent(content)
+	}
+
+	const handleFormSubmit = event => {
+		event.preventDefault()
+		setContent(tempContent)
+		handleUpdate(id, tempContent)
+		handleCloseModal()
 	}
 
 	return (
 		<li key={id} className={classes.todoListItem}>
-			<div className="todoItemContent">
+			<div className={classes.todoItemContent}>
 				<span>{content}</span>
 			</div>
 
 			<div className={classes.todoItemButtons}>
 				<button
 					className={classes.todoItemNavButton}
-					onClick={() => {
-						setActiveModalId(id)
-					}}
+					onClick={() => setActiveModalId(id)}
 					disabled={isUpdating}
 				>
 					<img src={`${editIcon}`} alt="" title="Редактировать..." />
@@ -60,24 +76,14 @@ export const TodoItem = ({
 				</button>
 			</div>
 
-			<Modal
-				active={activeModalId === id}
-				setActive={() => setActiveModalId(null)}
-			>
-				<div className={classes.modalTitle} onClick={handleBackgroundClick}>
-					Обновить заметку
-				</div>
-				<form
-					className={classes.creatingForm}
-					onSubmit={event => {
-						event.preventDefault()
-						handleUpdate(id, content)
-					}}
-				>
+			<Modal active={activeModalId === id} setActive={handleCloseModal}>
+				<div className={classes.modalTitle}>Обновить заметку</div>
+				<form className={classes.creatingForm} onSubmit={handleFormSubmit}>
 					<label className={classes.modalLabel}>Введите заметку:</label>
 					<input
-						value={content}
-						onChange={event => setContent(event.target.value)}
+						value={tempContent} // Используем временное состояние для отображения в input
+						ref={updatingInputRef}
+						onChange={event => setTempContent(event.target.value)}
 					/>
 					<div className={classes.buttons}>
 						<button type="submit">
