@@ -1,11 +1,11 @@
-import { useContext } from 'react'
-import { AppContext } from '@/context.jsx'
+import { store } from '@/store'
 
 export const UserPersonalInfo = () => {
-	const { userData, dispatch } = useContext(AppContext)
-	const { name, age, email, phone } = userData
+	const { name, age } = store.getState()
+	const { dispatch } = store
 
 	const onUserUpdate = () => {
+		const { name, email, phone } = store.getState()
 		const newUserData = { name, age: 30, email, phone }
 		dispatch({ type: 'SET_USER_DATA', payload: newUserData })
 	}
