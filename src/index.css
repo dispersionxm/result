@@ -5,12 +5,14 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #fff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --primary-color: black;
 }
 
 body {
@@ -20,12 +22,14 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-size: 18px;
+  color: var(--primary-color);
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
