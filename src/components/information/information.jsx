@@ -1,23 +1,34 @@
+import { store } from '../../store.js'
+import { PLAYER_ACTION, PLAYER_NAME, STATUS } from '../../constants/index.js'
 import { InformationLayout } from './information-layout.jsx'
-import {
-	PLAYER,
-	PLAYER_ACTION,
-	PLAYER_NAME,
-	STATUS,
-} from '../../constants/index.js'
-import PropTypes from 'prop-types'
+import { useEffect, useState } from 'react'
 
-export const Information = ({ status, currentPlayer }) => {
-	const playerAction = PLAYER_ACTION[status]
-	const playerName = PLAYER_NAME[currentPlayer]
+export const Information = () => {
+	// хотел чтобы не было неиспользуемых свойств informationState
+
+	const { status, currentPlayer } = store.getState()
+	const [informationState, setInformationState] = useState({
+		status,
+		currentPlayer,
+	})
+
+	useEffect(() => {
+		return store.subscribe(() => {
+			const currentState = store.getState()
+			setInformationState({
+				status: currentState.status,
+				currentPlayer: currentState.currentPlayer,
+			})
+		})
+	}, [])
+
+	const playerAction = PLAYER_ACTION[informationState.status]
+	const playerName = PLAYER_NAME[informationState.currentPlayer]
 
 	const information =
-		status === STATUS.DRAW ? `Ничья` : `${playerAction}: ${playerName}`
+		informationState.status === STATUS.DRAW
+			? `Ничья`
+			: `${playerAction}: ${playerName}`
 
 	return <InformationLayout information={information} />
-}
-
-Information.propTypes = {
-	status: PropTypes.oneOf([STATUS.TURN, STATUS.WIN, STATUS.DRAW]),
-	currentPlayer: PropTypes.oneOf([PLAYER.CROSS, PLAYER.NOUGHT]),
 }
