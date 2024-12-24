@@ -1,21 +1,11 @@
-import { store } from '../../store.js'
+import { useSelector } from 'react-redux'
+import { selectField } from '../../selectors'
 import { FieldLayout } from './field-layout.jsx'
-import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
+import { useHandleCellClick } from '../../handlers/index.js'
 
-export const Field = ({ handleCellClick }) => {
-	const [field, setField] = useState(store.getState().field)
-
-	useEffect(() => {
-		return store.subscribe(() => {
-			const currentState = store.getState()
-			setField(currentState.field)
-		})
-	}, [])
+export const Field = () => {
+	const field = useSelector(selectField)
+	const handleCellClick = useHandleCellClick()
 
 	return <FieldLayout field={field} handleCellClick={handleCellClick} />
-}
-
-Field.propTypes = {
-	handleCellClick: PropTypes.func,
 }

@@ -1,38 +1,42 @@
-import { store } from '../store.js'
+import { useDispatch, useStore } from 'react-redux'
 import { PLAYER, STATUS } from '../constants'
-import { checkWin, checkEmptyCell } from '../utils'
+import { checkEmptyCell, checkWin } from '../utils'
 import {
 	changeCurrentPlayer,
 	changeStatus,
 	updateField,
 } from '../actions/index.js'
 
-export const handleCellClick = cellIndex => {
-	const { status, currentPlayer, field } = store.getState()
+export const useHandleCellClick = () => {
+	const { status, currentPlayer, field } = useStore().getState()
 
-	if (
-		status === STATUS.WIN ||
-		status === STATUS.DRAW ||
-		field[cellIndex] !== PLAYER.NOBODY
-	) {
-		return
-	}
+	const dispatch = useDispatch()
 
-	const newField = [...field]
+	return cellIndex => {
+		if (
+			status === STATUS.WIN ||
+			status === STATUS.DRAW ||
+			field[cellIndex] !== PLAYER.NOBODY
+		) {
+			return
+		}
 
-	newField[cellIndex] = currentPlayer
+		const newField = [...field]
 
-	store.dispatch(updateField(newField))
+		newField[cellIndex] = currentPlayer
 
-	if (checkWin(newField, currentPlayer)) {
-		store.dispatch(changeStatus(STATUS.WIN))
-	} else if (checkEmptyCell(newField)) {
-		store.dispatch(
-			changeCurrentPlayer(
-				currentPlayer === PLAYER.CROSS ? PLAYER.NOUGHT : PLAYER.CROSS,
-			),
-		)
-	} else {
-		store.dispatch(changeStatus(STATUS.DRAW))
+		dispatch(updateField(newField))
+
+		if (checkWin(newField, currentPlayer)) {
+			dispatch(changeStatus(STATUS.WIN))
+		} else if (checkEmptyCell(newField)) {
+			dispatch(
+				changeCurrentPlayer(
+					currentPlayer === PLAYER.CROSS ? PLAYER.NOUGHT : PLAYER.CROSS,
+				),
+			)
+		} else {
+			dispatch(changeStatus(STATUS.DRAW))
+		}
 	}
 }

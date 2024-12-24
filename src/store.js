@@ -1,4 +1,5 @@
-import { legacy_createStore as createStore } from 'redux'
+import { createStore, compose } from 'redux'
 import { gameReducer } from './reducers'
 
-export let store = createStore(gameReducer)
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+export const store = createStore(gameReducer, composeEnhancers())
