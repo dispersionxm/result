@@ -2,8 +2,9 @@ import { store } from '../../store.js'
 import { FieldLayout } from './field-layout.jsx'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
+import { handleCellClick } from '../../handlers/index.js'
 
-export const Field = ({ handleCellClick }) => {
+export const Field = () => {
 	const [field, setField] = useState(store.getState().field)
 
 	useEffect(() => {
