@@ -1,3 +1,2 @@
-export * from './use-set-active-modal-id.js'
-export * from './use-set-modal-active.js'
 export * from './filter-todos.js'
+export * from './handle-update-todos.js'

@@ -2,7 +2,8 @@ import { setError, setLoading } from '../actions/index.js'
 
 export const deleteTodo = id => dispatch => {
 	dispatch(setLoading(true))
-	fetch(`http://localhost:4242/todos/${id}`, {
+
+	return fetch(`http://localhost:4242/todos/${id}`, {
 		method: 'Delete',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
 	})

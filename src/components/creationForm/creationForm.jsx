@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addTodo } from '../../async-actions/add-todo.js'
 import { selectNewTodoValue, selectIsLoading } from '../../selectors'
 import { setNewTodoValue } from '../../actions/index.js'
-import { useSetModalActive } from '../../utils/index.js'
+import { useSetModalActive } from '../../hooks'
 import classes from './creationForm.module.css'
+import { handleUpdateTodos } from '../../utils'
 
 // eslint-disable-next-line react/prop-types
 export const CreationForm = ({ creationInputRef }) => {
@@ -20,9 +21,13 @@ export const CreationForm = ({ creationInputRef }) => {
 			className={classes.creatingForm}
 			onSubmit={event => {
 				event.preventDefault()
-				newTodoValue
-					? dispatch(addTodo(newTodoValue))
-					: alert('Поле не должно быть пустым!')
+
+				if (newTodoValue) {
+					dispatch(addTodo(newTodoValue))
+					dispatch(handleUpdateTodos())
+				} else {
+					alert('Поле не должно быть пустым!')
+				}
 				setModalActive(false)
 			}}
 		>

@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectActiveModalId, selectIsLoading } from '../../selectors/index.js'
-import { useSetActiveModalId } from '../../utils/index.js'
+import { useSetActiveModalId } from '../../hooks'
 import { TaskLayout } from './task-layout.jsx'
+import { setActiveModalIdAction } from '../../actions/index.js'
 
 const LOADING_TIMEOUT = 5000
 
@@ -52,6 +53,10 @@ export const Task = () => {
 		navigate(-1)
 	}
 
+	const onUpdatingButtonClick = () => {
+		dispatch(setActiveModalIdAction(id))
+	}
+
 	return (
 		<TaskLayout
 			content={content}
@@ -63,6 +68,7 @@ export const Task = () => {
 			activeModalId={activeModalId}
 			setActiveModalId={setActiveModalId}
 			navigate={navigate}
+			onUpdatingButtonClick={onUpdatingButtonClick}
 		/>
 	)
 }

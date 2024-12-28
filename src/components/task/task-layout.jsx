@@ -1,9 +1,9 @@
-import { setActiveModalIdAction } from '../../actions/index.js'
-import editIcon from '../icons/edit-icon.svg'
-import { deleteTodo, updateTodo } from '../../async-actions/index.js'
-import deleteIcon from '../icons/delete-icon.svg'
 import { Modal } from '../modal/modal.jsx'
+import editIcon from '../icons/edit-icon.svg'
+import deleteIcon from '../icons/delete-icon.svg'
 import classes from './task.module.css'
+import { deleteTodo, updateTodo } from '../../async-actions/index.js'
+import { handleUpdateTodos } from '../../utils'
 
 export const TaskLayout = ({
 	content,
@@ -11,10 +11,11 @@ export const TaskLayout = ({
 	isLoading,
 	onGoBackButtonClick,
 	id,
-	dispatch,
 	activeModalId,
 	setActiveModalId,
 	navigate,
+	onUpdatingButtonClick,
+	dispatch,
 }) => (
 	<>
 		<button className={classes.goBackButton} onClick={onGoBackButtonClick}>
@@ -28,7 +29,7 @@ export const TaskLayout = ({
 				<button
 					className={classes.todoItemNavButton}
 					onClick={() => {
-						dispatch(setActiveModalIdAction(id))
+						onUpdatingButtonClick()
 					}}
 					disabled={isLoading}
 				>
@@ -38,6 +39,7 @@ export const TaskLayout = ({
 					className={classes.todoItemNavButton}
 					onClick={() => {
 						dispatch(deleteTodo(id))
+						dispatch(handleUpdateTodos())
 						navigate(-1)
 					}}
 					disabled={isLoading}
@@ -57,6 +59,7 @@ export const TaskLayout = ({
 				onSubmit={event => {
 					event.preventDefault()
 					dispatch(updateTodo(id, content))
+					dispatch(handleUpdateTodos())
 				}}
 			>
 				<label className={classes.modalLabel}>Введите заметку:</label>

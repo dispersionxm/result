@@ -8,9 +8,9 @@ import {
 	selectIsModalActive,
 } from '../../selectors'
 import { getTodos } from '../../async-actions/index.js'
-import { filterTodos, useSetModalActive } from '../../utils/index.js'
+import { useSetModalActive } from '../../hooks'
+import { filterTodos } from '../../utils'
 import classes from './homePage.module.css'
-import { store } from '../../store.js'
 
 export const HomePage = () => {
 	const dispatch = useDispatch()
@@ -32,7 +32,7 @@ export const HomePage = () => {
 	// initialization
 	useEffect(() => {
 		dispatch(getTodos())
-	}, [dispatch, todos])
+	}, [dispatch])
 
 	// filter
 	const filteredTodos = filterTodos(todos, searchingInputValue)
