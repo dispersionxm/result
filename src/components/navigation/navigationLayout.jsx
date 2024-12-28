@@ -6,7 +6,7 @@ import addNoteIcon from '../icons/add-note.svg'
 export const NavigationLayout = ({
 	searchingInputValue,
 	setSearchingInputValue,
-	setModalActive,
+	modalActive,
 }) => {
 	return (
 		<nav className={classes.navigation}>
@@ -30,7 +30,7 @@ export const NavigationLayout = ({
 				title="Создать заметку..."
 				aria-label="Создать заметку"
 				onClick={() => {
-					setModalActive(true)
+					modalActive(true)
 				}}
 			>
 				<img alt="" src={`${addNoteIcon}`} />

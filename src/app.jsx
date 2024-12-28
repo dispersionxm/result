@@ -9,17 +9,7 @@ export const App = () => {
 	return (
 		<>
 			<Routes>
-				<Route
-					path="/"
-					element={
-						<HomePage
-							refreshProducts={refreshProducts}
-							setRefreshProducts={setRefreshProducts}
-							activeModalId={activeModalId}
-							setActiveModalId={setActiveModalId}
-						/>
-					}
-				/>
+				<Route path="/" element={<HomePage />} />
 				<Route
 					path="/task/:id"
 					element={
