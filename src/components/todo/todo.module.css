@@ -1,0 +1,29 @@
+.todo {
+    padding: 10px;
+    border-bottom: 1px solid #bbb;
+    display: flex;
+}
+
+.todo:last-child {
+    border-bottom: none;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 0 0;
+}
+
+.checkbox:not(:checked) {
+    background-color: transparent;
+
+}
+
+.title {
+    width: 100%;
+    margin-right: 10px;
+}
+
+.titleValue::selection {
+    background-color: #b9f;
+}

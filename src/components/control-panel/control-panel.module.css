@@ -1,0 +1,5 @@
+.controlPanel {
+    display: flex;
+    height: 25px;
+    padding: 10px;
+}
