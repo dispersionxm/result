@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux'
-import { selectAge, selectName } from '../../selectors'
-export const User = () => {
-	// const { name, age } = store.getState()
+import { connect /*useSelector*/ } from 'react-redux'
+// import { selectAge, selectName } from '../../selectors'
 
-	const name = useSelector(selectName)
-	const age = useSelector(selectAge)
+export const UserContainer = ({ name, age }) => {
+	// const name = useSelector(selectName)
+	// const age = useSelector(selectAge)
 
 	return (
 		<article>
@@ -14,3 +13,10 @@ export const User = () => {
 		</article>
 	)
 }
+
+const mapStateToProps = state => ({
+	name: state.userState.name,
+	age: state.userState.age,
+})
+
+export const User = connect(mapStateToProps)(UserContainer)
