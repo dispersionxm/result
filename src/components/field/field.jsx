@@ -1,11 +1,21 @@
-import { useSelector } from 'react-redux'
-import { selectField } from '../../selectors'
-import { FieldLayout } from './field-layout.jsx'
-import { useHandleCellClick } from '../../handlers/index.js'
+import { connect } from 'react-redux'
+import { FieldContainer } from './field-container.jsx'
+import { changeCurrentPlayer, changeStatus, updateField } from '../../actions'
 
-export const Field = () => {
-	const field = useSelector(selectField)
-	const handleCellClick = useHandleCellClick()
+const mapStateToProps = state => ({
+	field: state.field,
+	status: state.status,
+	currentPlayer: state.currentPlayer,
+})
 
-	return <FieldLayout field={field} handleCellClick={handleCellClick} />
-}
+const mapDispatchToProps = dispatch => ({
+	dispatch,
+	updateField: field => dispatch(updateField(field)),
+	changeStatus: status => dispatch(changeStatus(status)),
+	changeCurrentPlayer: player => dispatch(changeCurrentPlayer(player)),
+})
+
+export const Field = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(FieldContainer)

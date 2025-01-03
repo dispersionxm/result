@@ -1,11 +1,4 @@
-.field {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 300px;
-    margin: 20px 0;
-    box-sizing: content-box;
-    border: 1px solid black;
-}
+
 
 .cell {
     width: 100px;
